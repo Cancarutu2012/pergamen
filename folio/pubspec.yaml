@@ -54,6 +54,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  swift-package-manager: false
 
   assets:
     - assets/icons/ic_splash.png
