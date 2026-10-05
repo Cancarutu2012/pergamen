@@ -50,24 +50,60 @@ jobs:
           mkdir -p build/ios/SourcePackages
           flutter build ios --release --no-codesign
 
-      - name: Package IPA for Sideloading
+      - name: Package IPAs for Sideloading
         run: |
-          mkdir -p build-ipa/Payload
-          cp -R folio/build/ios/iphoneos/Runner.app build-ipa/Payload/
-          if [ -d "build-ipa/Payload/Runner.app/Frameworks" ]; then
-            find build-ipa/Payload/Runner.app/Frameworks -mindepth 1 -maxdepth 1 -name "*.framework" -exec codesign --force --sign - {} \;
+          mkdir -p output
+
+          # -------------------------------------------------------------
+          # 1. Standard Sideload IPA (Clean, No Extensions)
+          # Recommended for Sideloadly, AltStore, SideStore, and TrollStore
+          # Free Apple IDs cannot sign Live Activity extensions without crashing.
+          # -------------------------------------------------------------
+          mkdir -p build-ipa-standard/Payload
+          cp -a folio/build/ios/iphoneos/Runner.app build-ipa-standard/Payload/
+          rm -rf build-ipa-standard/Payload/Runner.app/PlugIns
+
+          # Ensure execute permissions on binary and frameworks
+          chmod -R a+rX build-ipa-standard/Payload/Runner.app
+          chmod +x build-ipa-standard/Payload/Runner.app/Runner
+
+          # Re-sign embedded frameworks and app ad-hoc
+          if [ -d "build-ipa-standard/Payload/Runner.app/Frameworks" ]; then
+            find build-ipa-standard/Payload/Runner.app/Frameworks -mindepth 1 -maxdepth 1 -name "*.framework" -exec codesign --force --verify --verbose --sign - {} \;
           fi
-          if [ -d "build-ipa/Payload/Runner.app/PlugIns" ]; then
-            find build-ipa/Payload/Runner.app/PlugIns -mindepth 1 -maxdepth 1 -name "*.appex" -exec codesign --force --sign - {} \;
-          fi
-          codesign --force --sign - build-ipa/Payload/Runner.app
-          cd build-ipa
-          zip -r -9 Pergamen-1.2.12-BETA.ipa Payload
+          codesign --force --verify --verbose --sign - build-ipa-standard/Payload/Runner.app
+
+          cd build-ipa-standard
+          zip -qry -9 ../output/Pergamen-1.2.12-BETA.ipa Payload
           cd ..
 
-      - name: Upload IPA Artifact
+          # -------------------------------------------------------------
+          # 2. TrollStore IPA (Includes livecard.appex extension)
+          # For TrollStore users or paid developer certificates
+          # -------------------------------------------------------------
+          mkdir -p build-ipa-full/Payload
+          cp -a folio/build/ios/iphoneos/Runner.app build-ipa-full/Payload/
+
+          chmod -R a+rX build-ipa-full/Payload/Runner.app
+          chmod +x build-ipa-full/Payload/Runner.app/Runner
+
+          if [ -d "build-ipa-full/Payload/Runner.app/Frameworks" ]; then
+            find build-ipa-full/Payload/Runner.app/Frameworks -mindepth 1 -maxdepth 1 -name "*.framework" -exec codesign --force --verify --verbose --sign - {} \;
+          fi
+          if [ -d "build-ipa-full/Payload/Runner.app/PlugIns" ]; then
+            find build-ipa-full/Payload/Runner.app/PlugIns -mindepth 1 -maxdepth 1 -name "*.appex" -exec codesign --force --verify --verbose --sign - {} \;
+          fi
+          codesign --force --verify --verbose --sign - build-ipa-full/Payload/Runner.app
+
+          cd build-ipa-full
+          zip -qry -9 ../output/Pergamen-1.2.12-BETA-TrollStore.ipa Payload
+          cd ..
+
+          ls -lh output/
+
+      - name: Upload IPA Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: Pergamen-1.2.12-BETA-iOS
-          path: build-ipa/Pergamen-1.2.12-BETA.ipa
+          path: output/*.ipa
           retention-days: 14
