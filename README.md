@@ -5,7 +5,7 @@
 
 ### Nem hivatalos kliens alkalmazás az e-KRÉTA rendszerhez.
 
-**Letöltés: https://mate.radetzky.hu/projektek/#pergamen**
+**Letöltés: https://mate.radetzky.hu/pergamen**
 
 
 ***annon:** Mostani Folio projekt a Githubon*
