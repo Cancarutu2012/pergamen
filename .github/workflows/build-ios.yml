@@ -29,17 +29,16 @@ jobs:
           channel: 'stable'
           cache: true
 
-      - name: Install Flutter & CocoaPods dependencies
+      - name: Install dependencies
         run: |
           cd folio
+          mkdir -p build/ios/SourcePackages
           flutter pub get
-          cd ios
-          pod install --repo-update
-          cd ..
 
       - name: Build iOS Application (Unsigned Release)
         run: |
           cd folio
+          mkdir -p build/ios/SourcePackages
           flutter build ios --release --no-codesign
 
       - name: Package IPA for Sideloading
