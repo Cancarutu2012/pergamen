@@ -10,6 +10,12 @@
 		</array>
 		<key>CADisableMinimumFrameDurationOnPhone</key>
 		<true/>
+		<key>FirebaseAppDelegateProxyEnabled</key>
+		<false/>
+		<key>UIFileSharingEnabled</key>
+		<true/>
+		<key>LSSupportsOpeningDocumentsInPlace</key>
+		<true/>
 		<key>CFBundleDevelopmentRegion</key>
 		<string>$(DEVELOPMENT_LANGUAGE)</string>
 		<key>CFBundleExecutable</key>

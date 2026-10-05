@@ -7,6 +7,56 @@ import Flutter
 import Security
 import WebKit
 
+func writePergamenLog(_ message: String) {
+    print("[Pergamen] " + message)
+    guard let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
+    let logFile = dir.appendingPathComponent("pergamen_boot.log")
+    let timestamp = ISO8601DateFormatter().string(from: Date())
+    let line = "[\(timestamp)] \(message)\n"
+    if let data = line.data(using: .utf8) {
+        if let handle = try? FileHandle(forWritingTo: logFile) {
+            handle.seekToEndOfFile()
+            handle.write(data)
+            handle.closeFile()
+        } else {
+            try? data.write(to: logFile, options: .atomic)
+        }
+    }
+}
+
+func setupCrashHandler() {
+    NSSetUncaughtExceptionHandler { exception in
+        guard let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
+        let crashFile = dir.appendingPathComponent("pergamen_crash.log")
+        let timestamp = ISO8601DateFormatter().string(from: Date())
+        let content = """
+        === PERGAMEN CRASH REPORT ===
+        Time: \(timestamp)
+        Name: \(exception.name.rawValue)
+        Reason: \(exception.reason ?? "Unknown reason")
+        User Info: \(String(describing: exception.userInfo))
+        Stack Trace:
+        \(exception.callStackSymbols.joined(separator: "\n"))
+        =============================
+        """
+        try? content.data(using: .utf8)?.write(to: crashFile, options: .atomic)
+        writePergamenLog("FATAL EXCEPTION: \(exception.name.rawValue) - \(exception.reason ?? "")")
+    }
+
+    signal(SIGABRT) { sig in
+        writePergamenLog("SIGNAL RECEIVED: SIGABRT (\(sig))")
+    }
+    signal(SIGSEGV) { sig in
+        writePergamenLog("SIGNAL RECEIVED: SIGSEGV (\(sig))")
+    }
+    signal(SIGBUS) { sig in
+        writePergamenLog("SIGNAL RECEIVED: SIGBUS (\(sig))")
+    }
+    signal(SIGILL) { sig in
+        writePergamenLog("SIGNAL RECEIVED: SIGILL (\(sig))")
+    }
+}
+
 @main
 @objc class AppDelegate: FlutterAppDelegate {
     private var methodChannel: FlutterMethodChannel?
@@ -16,10 +66,19 @@ import WebKit
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
+        setupCrashHandler()
+        writePergamenLog("=== 1. didFinishLaunchingWithOptions entered ===")
+
+        writePergamenLog("2. Registering GeneratedPluginRegistrant...")
         GeneratedPluginRegistrant.register(with: self)
+        writePergamenLog("3. GeneratedPluginRegistrant registered successfully.")
+
+        writePergamenLog("4. Calling super.application...")
         let result = super.application(application, didFinishLaunchingWithOptions: launchOptions)
+        writePergamenLog("5. super.application returned: \(result)")
 
         if let controller = window?.rootViewController as? FlutterViewController {
+            writePergamenLog("6. FlutterViewController acquired, configuring method channel...")
             methodChannel = FlutterMethodChannel(
                 name: "app.zan1456.folio/liveactivity",
                 binaryMessenger: controller.binaryMessenger
@@ -35,6 +94,9 @@ import WebKit
                 }
                 self?.handleMethodCall(call, result: result)
             })
+            writePergamenLog("7. Method channel configured successfully.")
+        } else {
+            writePergamenLog("6. Warning: rootViewController is not FlutterViewController")
         }
 
         NotificationCenter.default.addObserver(
@@ -64,6 +126,7 @@ import WebKit
             }
         }
 
+        writePergamenLog("8. didFinishLaunchingWithOptions returning: \(result)")
         return result
     }
 

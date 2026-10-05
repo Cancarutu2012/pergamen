@@ -33,17 +33,32 @@ import 'package:folio/utils/service_locator.dart';
 import 'package:folio_mobile_ui/screens/error_screen.dart';
 import 'package:folio_mobile_ui/screens/error_report_screen.dart';
 
+import 'package:path_provider/path_provider.dart';
+
 import 'helpers/live_activity_helper.dart';
+
+Future<void> appendLog(String message) async {
+  debugPrint('[Pergamen-Dart] $message');
+  try {
+    final dir = await getApplicationDocumentsDirectory();
+    final file = File('${dir.path}/pergamen_boot.log');
+    await file.writeAsString('[${DateTime.now().toIso8601String()}] [Dart] $message\n', mode: FileMode.append);
+  } catch (e) {
+    debugPrint('appendLog error: $e');
+  }
+}
 
 // days without touching grass: 5,843 (16 yrs)
 
 void main() async {
   try {
     WidgetsBinding binding = WidgetsFlutterBinding.ensureInitialized();
+    await appendLog('1. WidgetsFlutterBinding initialized');
     // ignore: deprecated_member_use
     binding.renderView.automaticSystemUiAdjustment = false;
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     setupLocator();
+    await appendLog('2. Locator setup complete');
 
     if (!kIsWeb) {
       try {
@@ -60,20 +75,23 @@ void main() async {
             databaseURL: "https://ellenorzo-v2.firebaseio.com",
           ),
         );
+        await appendLog('3. Firebase initialized');
       } catch (e) {
-        debugPrint('Firebase init skipped: $e');
+        await appendLog('3. Firebase skipped: $e');
       }
     }
 
     Startup startup = Startup();
+    await appendLog('4. Calling startup.start()...');
     await startup.start();
+    await appendLog('5. startup.start() finished successfully');
 
     ErrorWidget.builder = errorBuilder;
 
     try {
       BackgroundFetch.registerHeadlessTask(backgroundHeadlessTask);
     } catch (e) {
-      debugPrint('[BackgroundFetch] registerHeadlessTask error: $e');
+      await appendLog('[BackgroundFetch] registerHeadlessTask error: $e');
     }
 
     // pre-cache required icons
@@ -97,12 +115,15 @@ void main() async {
     svg.cache.putIfAbsent(
         absencesSvg.cacheKey(null), () => absencesSvg.loadBytes(null));
 
+    await appendLog('6. Calling runApp(App(...))...');
     runApp(App(
       database: startup.database,
       settings: startup.settings,
       user: startup.user,
     ));
+    await appendLog('7. runApp executed');
   } catch (error, stackTrace) {
+    await appendLog('FATAL DART ERROR: $error\n$stackTrace');
     runApp(MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.black,
@@ -129,18 +150,27 @@ class Startup {
   late DatabaseProvider database;
 
   Future<void> start() async {
+    await appendLog('Startup.start: creating DatabaseProvider');
     database = DatabaseProvider();
+    await appendLog('Startup.start: calling initDB');
     var db = await initDB(database);
+    await appendLog('Startup.start: closing temp db');
     await db.close();
+    await appendLog('Startup.start: calling database.init()');
     await database.init();
+    await appendLog('Startup.start: getSettings');
     settings = await database.query.getSettings(database);
+    await appendLog('Startup.start: getUsers');
     user = await database.query.getUsers(settings);
+    await appendLog('Startup.start: all DB operations complete');
 
     if (!kIsWeb) {
       try {
+        await appendLog('Startup.start: initAdditionalBackgroundFetch');
         await initAdditionalBackgroundFetch();
+        await appendLog('Startup.start: background fetch initialized');
       } catch (e) {
-        debugPrint('[Startup] background fetch error: $e');
+        await appendLog('Startup.start: background fetch error: $e');
       }
     }
   }
