@@ -60,7 +60,7 @@ void main() async {
     setupLocator();
     await appendLog('2. Locator setup complete');
 
-    if (!kIsWeb) {
+    if (Platform.isAndroid) {
       try {
         await Firebase.initializeApp(
           name: defaultFirebaseAppName,

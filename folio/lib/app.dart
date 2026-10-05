@@ -125,7 +125,7 @@ class _AppState extends State<App> {
         if (config != null) settings.update(config: config);
       });
       // Register device for push notifications if a user is already signed in
-      if (user.user != null && settings.notificationsEnabled) {
+      if (Platform.isAndroid && user.user != null && settings.notificationsEnabled) {
         NotificationHelper.initialize(user.user!, database);
       }
     });
