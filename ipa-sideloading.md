@@ -1,3 +1,9 @@
+### Az alábbi útmutató a Firka projekt GitHub oldaláról lett átmásolva. ###
+
+
+
+
+
 # <img src="https://github.com/user-attachments/assets/dadb8ed3-7073-4591-a004-0d4c646fa963" alt width="24px"> A Firka IPA fájlainak telepítéséhez kövesd ezt az útmutatót.
 
 Három lehetőséged van a Firka telepítésére:
