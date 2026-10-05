@@ -5,6 +5,7 @@
 
 ### Nem hivatalos kliens alkalmazás az e-KRÉTA rendszerhez.
 
+**Letöltés: https://mate.radetzky.hu/projektek/#pergamen**
 
 
 ***annon:** Mostani Folio projekt a Githubon*
@@ -17,4 +18,4 @@ Egy szebb, több funkcióval rendelkező alkalmazás létrehozása mint az alap 
 
 ## Elérhető lesz IOS-re?
 
-Később igen.
+Már most is elérhető a Pergamen v1.2.12 BETA verziójától kezdve.
