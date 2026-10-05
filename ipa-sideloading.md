@@ -171,6 +171,15 @@ Három lehetőséged van a Pergamen telepítésére:
 - Válaszd ki a párosító fájlt
 - Jelentkezz be az Apple Fiókoddal
 
+### Megjegyzések:
+- Ha frissíted az eszközöd, újra kell csinálnod a párosítást
+- Új párosító fájl hozzáadásához:
+  - Menj a SideStore beállításaiba
+  - Nyomd meg a "Reset Pairing File" gombot
+  - Add hozzá az új verziót
+  - Sajnáljuk a komplikált fojamatot. Sajnálatos módon a Testflight vagy az App Storera való kitétel jelenleg nem nagyon egy opció, mivel az Applenek 100 eurós fejelsztői membership vásárlása kötelező.
+ 
+  - 
 ## 4. Sideloadly
 
 - Töltsd le a sideloadly-t a [hivatalos oldaláról](https://sideloadly.io/index.html)
@@ -189,10 +198,5 @@ Három lehetőséged van a Pergamen telepítésére:
 
 
 ### Megjegyzések:
-- Ha frissíted az eszközöd, újra kell csinálnod a párosítást
-- Új párosító fájl hozzáadásához:
-  - Menj a SideStore beállításaiba
-  - Nyomd meg a "Reset Pairing File" gombot
-  - Add hozzá az új verziót
-  - Sajnáljuk a komplikált fojamatot. Sajnálatos módon a Testflight vagy az App Storera való kitétel jelenleg nem nagyon egy opció, mivel az Applenek 100 eurós fejelsztői membership vásárlása kötelező.
-
+- Ha frissíted az eszközöd, újra kell frissítened az alkalmazásokat AKKOR IS, ha még nem telt le a 7 nap.
+- 
