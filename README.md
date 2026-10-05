@@ -7,6 +7,8 @@
 
 **Letöltés: https://mate.radetzky.hu/pergamen**
 
+**iOS Sideloading útmutató: https://github.com/materadetzky/pergamen/ios-sideloading.md**
+
 
 ***annon:** Mostani Folio projekt a Githubon*
 
