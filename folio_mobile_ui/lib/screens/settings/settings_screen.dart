@@ -2512,6 +2512,7 @@ class SettingsScreenState extends State<SettingsScreen>
         category: 'about',
         searchTerms: [
           'discord',
+          'github',
           'névjegy',
           'about'
         ],
@@ -2525,9 +2526,19 @@ class SettingsScreenState extends State<SettingsScreen>
                   color: AppColors.of(context).text.withValues(alpha: 0.95)),
               title: const Text("Discord"),
               onPressed: () => launchUrl(
-                  Uri.parse("https://kreten.freehosting.dev/discord"),
+                  Uri.parse("https://mate.radetzky.hu/pergamen-discord.html"),
                   mode: LaunchMode.externalApplication),
-              borderRadius: BorderRadius.circular(12.0),
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(12.0)),
+            ),
+            PanelButton(
+              leading: Icon(Icons.code_rounded,
+                  size: 22.0,
+                  color: AppColors.of(context).text.withValues(alpha: 0.95)),
+              title: const Text("GitHub"),
+              onPressed: () => launchUrl(
+                  Uri.parse("https://mate.radetzky.hu/personal-gihub.html"),
+                  mode: LaunchMode.externalApplication),
+              borderRadius: const BorderRadius.vertical(bottom: Radius.circular(12.0)),
             ),
           ],
         ),
