@@ -70,7 +70,11 @@ void main() async {
 
     ErrorWidget.builder = errorBuilder;
 
-    BackgroundFetch.registerHeadlessTask(backgroundHeadlessTask);
+    try {
+      BackgroundFetch.registerHeadlessTask(backgroundHeadlessTask);
+    } catch (e) {
+      debugPrint('[BackgroundFetch] registerHeadlessTask error: $e');
+    }
 
     // pre-cache required icons
     const todaySvg = SvgAssetLoader('assets/svg/menu_icons/today_selected.svg');
@@ -133,7 +137,11 @@ class Startup {
     user = await database.query.getUsers(settings);
 
     if (!kIsWeb) {
-      initAdditionalBackgroundFetch();
+      try {
+        await initAdditionalBackgroundFetch();
+      } catch (e) {
+        debugPrint('[Startup] background fetch error: $e');
+      }
     }
   }
 }
@@ -177,39 +185,43 @@ Widget errorBuilder(FlutterErrorDetails details) {
 }
 
 Future<void> initAdditionalBackgroundFetch() async {
-  int status = await BackgroundFetch.configure(
-      BackgroundFetchConfig(
-          minimumFetchInterval: 15,
-          stopOnTerminate: false,
-          enableHeadless: true,
-          requiresBatteryNotLow: false,
-          requiresCharging: false,
-          requiresStorageNotLow: false,
-          requiresDeviceIdle: false,
-          requiredNetworkType: NetworkType.ANY,
-          startOnBoot: true), (String taskId) async {
+  try {
+    int status = await BackgroundFetch.configure(
+        BackgroundFetchConfig(
+            minimumFetchInterval: 15,
+            stopOnTerminate: false,
+            enableHeadless: true,
+            requiresBatteryNotLow: false,
+            requiresCharging: false,
+            requiresStorageNotLow: false,
+            requiresDeviceIdle: false,
+            requiredNetworkType: NetworkType.ANY,
+            startOnBoot: true), (String taskId) async {
+      if (kDebugMode) {
+        print("[BackgroundFetch] Event received $taskId");
+      }
+      LiveActivityHelper liveActivityHelper = LiveActivityHelper();
+      liveActivityHelper.backgroundJob();
+      BackgroundFetch.finish(taskId);
+    }, (String taskId) async {
+      if (kDebugMode) {
+        print("[BackgroundFetch] TASK TIMEOUT taskId: $taskId");
+      }
+      BackgroundFetch.finish(taskId);
+    });
     if (kDebugMode) {
-      print("[BackgroundFetch] Event received $taskId");
+      print('[BackgroundFetch] configure success: $status');
     }
-    LiveActivityHelper liveActivityHelper = LiveActivityHelper();
-    liveActivityHelper.backgroundJob();
-    BackgroundFetch.finish(taskId);
-  }, (String taskId) async {
-    if (kDebugMode) {
-      print("[BackgroundFetch] TASK TIMEOUT taskId: $taskId");
-    }
-    BackgroundFetch.finish(taskId);
-  });
-  if (kDebugMode) {
-    print('[BackgroundFetch] configure success: $status');
+    BackgroundFetch.scheduleTask(TaskConfig(
+        taskId: "com.transistorsoft.folioliveactivity",
+        delay: 300000, // 5 minutes
+        periodic: true,
+        forceAlarmManager: true,
+        stopOnTerminate: false,
+        enableHeadless: true));
+  } catch (e) {
+    debugPrint('[BackgroundFetch] init error: $e');
   }
-  BackgroundFetch.scheduleTask(TaskConfig(
-      taskId: "com.transistorsoft.folioliveactivity",
-      delay: 300000, // 5 minutes
-      periodic: true,
-      forceAlarmManager: true,
-      stopOnTerminate: false,
-      enableHeadless: true));
 }
 
 @pragma('vm:entry-point')

@@ -2,6 +2,7 @@ import ActivityKit
 import WidgetKit
 import Foundation
 
+@available(iOS 16.1, *)
 public struct LiveActivitiesAppAttributes: ActivityAttributes, Identifiable {
     public typealias LiveDeliveryData = ContentState
     public struct ContentState: Codable, Hashable {

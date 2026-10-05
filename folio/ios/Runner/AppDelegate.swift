@@ -1,6 +1,8 @@
 import UIKit
 import background_fetch
+#if canImport(ActivityKit)
 import ActivityKit
+#endif
 import Flutter
 import Security
 import WebKit
