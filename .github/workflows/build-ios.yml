@@ -54,6 +54,13 @@ jobs:
         run: |
           mkdir -p build-ipa/Payload
           cp -R folio/build/ios/iphoneos/Runner.app build-ipa/Payload/
+          if [ -d "build-ipa/Payload/Runner.app/Frameworks" ]; then
+            find build-ipa/Payload/Runner.app/Frameworks -mindepth 1 -maxdepth 1 -name "*.framework" -exec codesign --force --sign - {} \;
+          fi
+          if [ -d "build-ipa/Payload/Runner.app/PlugIns" ]; then
+            find build-ipa/Payload/Runner.app/PlugIns -mindepth 1 -maxdepth 1 -name "*.appex" -exec codesign --force --sign - {} \;
+          fi
+          codesign --force --sign - build-ipa/Payload/Runner.app
           cd build-ipa
           zip -r -9 Pergamen-1.2.12-BETA.ipa Payload
           cd ..

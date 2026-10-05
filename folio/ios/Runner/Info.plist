@@ -9,63 +9,10 @@
 		</array>
 		<key>CADisableMinimumFrameDurationOnPhone</key>
 		<true/>
-		<key>CFBundleAlternateIcons</key>
-		<dict>
-			<key>firka_concept</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>firka_concept</string>
-				</array>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-			</dict>
-			<key>firka_default</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>firka_default</string>
-				</array>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-			</dict>
-			<key>firka_overcomplicated</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>firka_overcomplicated</string>
-				</array>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-			</dict>
-			<key>firka_pride</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>firka_pride</string>
-				</array>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-			</dict>
-		</dict>
 		<key>CFBundleDevelopmentRegion</key>
 		<string>$(DEVELOPMENT_LANGUAGE)</string>
 		<key>CFBundleExecutable</key>
 		<string>$(EXECUTABLE_NAME)</string>
-		<key>CFBundleIcons</key>
-		<dict>
-			<key>CFBundlePrimaryIcon</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string></string>
-				</array>
-				<key>CFBundleIconName</key>
-				<string></string>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-			</dict>
-		</dict>
 		<key>CFBundleIdentifier</key>
 		<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 		<key>CFBundleInfoDictionaryVersion</key>

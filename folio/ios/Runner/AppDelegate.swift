@@ -15,24 +15,25 @@ import WebKit
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         GeneratedPluginRegistrant.register(with: self)
-        guard let controller = window?.rootViewController as? FlutterViewController else {
-            fatalError("rootViewController is not type FlutterViewController")
+        let result = super.application(application, didFinishLaunchingWithOptions: launchOptions)
+
+        if let controller = window?.rootViewController as? FlutterViewController {
+            methodChannel = FlutterMethodChannel(
+                name: "app.zan1456.folio/liveactivity",
+                binaryMessenger: controller.binaryMessenger
+            )
+            methodChannel?.setMethodCallHandler({ [weak self] (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
+                guard call.method == "createLiveActivity"
+                    || call.method == "endLiveActivity"
+                    || call.method == "updateLiveActivity"
+                    || call.method == "getCookies"
+                else {
+                    result(FlutterMethodNotImplemented)
+                    return
+                }
+                self?.handleMethodCall(call, result: result)
+            })
         }
-        methodChannel = FlutterMethodChannel(
-            name: "app.zan1456.folio/liveactivity",
-            binaryMessenger: controller as! FlutterBinaryMessenger
-        )
-        methodChannel?.setMethodCallHandler({ [weak self] (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
-            guard call.method == "createLiveActivity"
-                || call.method == "endLiveActivity"
-                || call.method == "updateLiveActivity"
-                || call.method == "getCookies"
-            else {
-                result(FlutterMethodNotImplemented)
-                return
-            }
-            self?.handleMethodCall(call, result: result)
-        })
 
         NotificationCenter.default.addObserver(
             forName: NSNotification.Name("LiveActivityDismissed"),
@@ -61,7 +62,7 @@ import WebKit
             }
         }
 
-        return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+        return result
     }
 
     override func applicationWillTerminate(_ application: UIApplication) {
