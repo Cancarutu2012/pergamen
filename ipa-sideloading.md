@@ -1,15 +1,12 @@
-### Az alábbi útmutató a Firka projekt GitHub oldaláról lett átmásolva. ###
 
 
+# <img src="https://github.com/user-attachments/assets/dadb8ed3-7073-4591-a004-0d4c646fa963" alt width="24px"> A Pergamen IPA fájlainak telepítéséhez kövesd ezt az útmutatót.
 
-
-
-# <img src="https://github.com/user-attachments/assets/dadb8ed3-7073-4591-a004-0d4c646fa963" alt width="24px"> A Firka IPA fájlainak telepítéséhez kövesd ezt az útmutatót.
-
-Három lehetőséged van a Firka telepítésére:
+Három lehetőséged van a Pergamen telepítésére:
 - [Feather](#1-feather-metódus) - Fizetős, nem kell gép hozzá, 1 évre érvényes (ha lejár a certificate, újra meg kell vásárolni!)
 - [ESign](#2-esign-metódus) - Ingyenes, nem kell gép hozzá, örökre van (ajánlott)
 - [SideStore](#3-sidestore-metódus-a-sidestore-az-altstore-nak-egy-jobb-verziója) - Ingyenes, kell hozzá Mac, viszont Windowsal is működik, 7 naponta resign (telefonon megteheted lejárat előtt.)
+- [Sideloadly](#4-sideloadly) - Ingyenes, kell hozzá Mac vagy Windows PC, 7 naponta frissíteni kell
 
 
 ## 1. Feather metódus
@@ -38,12 +35,12 @@ Három lehetőséged van a Firka telepítésére:
    - Menj a `Settings` fülre és kattints a `Add Certificate` gombra
    - Kattints a `+`-ra és importáld a .mobileprovision-t a .p12-t és írd be a .p12 jelszavát aztán kattints a `Save` gombra
 
-### 6. Firka telepítése:
+### 6. Pergamen telepítése:
    - Amint telepített a Feather, nyisd meg és menj a `Sources` fülre alul
-   - Kattints a `Add Repo` gombra és másold be hogy `https://raw.githubusercontent.com/spitkov/firkarepo/refs/heads/main/feather.json` és kattints az `Add` gombra
-   - Menj a `Firka Repository` menüpontra és kattints a letöltésre
-   - Ha letöltött menj a `Library` fülre és kattints a Firka appra azután `Sign Firka` aztán `Start Signing`
-   - A Signed Apps alatt látni fogod a firkát kattints rá és `Install Firka`
+   - Kattints a `Add Repo` gombra és másold be hogy `https://raw.githubusercontent.com/spitkov/Pergamenrepo/refs/heads/main/feather.json` és kattints az `Add` gombra
+   - Menj a `Pergamen Repository` menüpontra és kattints a letöltésre
+   - Ha letöltött menj a `Library` fülre és kattints a Pergamen appra azután `Sign Pergamen` aztán `Start Signing`
+   - A Signed Apps alatt látni fogod a Pergament kattints rá és `Install Pergamen`
 
 ## 2. ESign metódus
 
@@ -76,14 +73,14 @@ Három lehetőséged van a Firka telepítésére:
 - Próbáld meg a `Portal - Continent` opciót
 - Ha "*Integritás nem ellenőrizhető*" hibát kapsz, próbáld a többi lehetőséget
 - Ha az **Avex** működik, csak az ESign-t választhatod
-- Ha egyik sem működik, feketelistán lehetsz - írj a Firka Discord szerverbe segítségért, vagy olvasd el a "[Revoke Fix Guide](https://github.com/TheAppleUser1/Revoke-Fixing-Guide)"-ot.
+- Ha egyik sem működik, feketelistán lehetsz - írj a Pergamen Discord szerverbe segítségért, vagy olvasd el a "[Revoke Fix Guide](https://github.com/TheAppleUser1/Revoke-Fixing-Guide)"-ot.
 - Menj a beállitásokba utána Általános az alatt VPN és eszközfelügyelet ott keresd meg a Profilt amit letöltöttél menjn rá és azon belül kattints a megbizásra utána megbizás (vagy megbizás és újraindítás) 
   
 ### 4. ESign telepítése
 - Nyisd meg a **Portal**t
 - Menj végig a beállítási folyamaton
 - Navigálj a `Downloads` fülre
-- Ha az **Avex**et választottad a **Portal** telepítésekor, csak az **ESign** opciót választhatod (a Firka ezt ajánlja)
+- Ha az **Avex**et választottad a **Portal** telepítésekor, csak az **ESign** opciót választhatod (a Pergamen ezt ajánlja)
 - Nyomd meg az **ESign** opciót, majd telepítsd ugyanúgy, mint a **Portal**t
 - Nyisd meg az **ESignt** és fogadd el a licencszerződést
 
@@ -99,19 +96,19 @@ Három lehetőséged van a Firka telepítésére:
 - Válaszd az `Import certificate management` opciót
 - Add meg a jelszót: `WSF`
 
-### 6. Firka telepítése
-- Menj az `AppStore` fülre alul aztán bal felül kattints az `App Source` gombra azután jobb felül kattints az +-ra és másold be hogy `https://raw.githubusercontent.com/spitkov/firkarepo/refs/heads/main/esign.json`
-- Menj vissza és az AppStore fülben látni fogod a Firká-t
+### 6. Pergamen telepítése
+- Menj az `AppStore` fülre alul aztán bal felül kattints az `App Source` gombra azután jobb felül kattints az +-ra és másold be hogy `https://raw.githubusercontent.com/spitkov/Pergamenrepo/refs/heads/main/esign.json`
+- Menj vissza és az AppStore fülben látni fogod a Pergamen-t
 - Kattints hogy `Download`
 - A `Download` fülben láthatod a letöltést, ha letöltött kattints rá és nyomd meg a `Import App Library` gombot
-- Azután menj a `Apps` fülre és válaszd ki a Firkát kattints a `Signature`-re aztán megint `Signature` (fontos ne lépj ki az esign-bol amíg nem jelentek meg az `Install` és az `Exit` gombok)
-- Ha végzett kattints az `Install` gombra és fel fog jönni egy kis menü hogy esign.yyyue.xyz telepíteni akarja a Firkát akkor kattints arra hogy Telepítés
+- Azután menj a `Apps` fülre és válaszd ki a Pergament kattints a `Signature`-re aztán megint `Signature` (fontos ne lépj ki az esign-bol amíg nem jelentek meg az `Install` és az `Exit` gombok)
+- Ha végzett kattints az `Install` gombra és fel fog jönni egy kis menü hogy esign.yyyue.xyz telepíteni akarja a Pergament akkor kattints arra hogy Telepítés
 - És kész is 🎉
 
 ### ESign FAQ:
-- Q1: Törölhetem az ESignt meg a profilt amiután meg lett a Firka?
+- Q1: Törölhetem az ESignt meg a profilt amiután meg lett a Pergamen?
 - A1: Igen, ha elakarod b*szni az egészet. Nem, ha meg szeretnéd tartani.
-- Több kérdés? Írj a Firka Discord szerverébe.
+- Több kérdés? Írj a Pergamen Discord szerverébe.
 
 ## 3. SideStore metódus (A SideStore az AltStore-nak egy jobb verziója)
 
@@ -174,7 +171,21 @@ Három lehetőséged van a Firka telepítésére:
 - Válaszd ki a párosító fájlt
 - Jelentkezz be az Apple Fiókoddal
 
+## 4. Sideloadly
 
+- Töltsd le a sideloadly-t a [hivatalos oldaláról](https://sideloadly.io/index.html)
+- Futtasd a letöltött telepítőt, és telepítsd fel az alkalmazást
+- (Opcionális) FONTOS: Ha windows gépet használsz, legyen telepítve az [Apple iTunes](https://appledb.dev/device/iTunes) (válaszd ki a gépednek megfelelő verziót)
+- Indítsd el a Sideloadly applikációt
+- A bal oldalon lévő IPA ikonra kattintva tallózd be a telepíteni kívánt .IPA fájlt
+- Az Apple ID mezőbe írd be az Apple Fiókod email címét / telefonszámát
+- Csatlakoztasd az Apple eszközöd a számítógépedhez
+- (Opcionális) Fogadd el az eszközön a "Megbízik ebben a számítógépben" felugró ablakot
+- Kattints a start gombra
+- Ha a Sideloadly megkér, add meg az Apple ID jelszavadat, illetve az opcionálisan a többi Apple eszközödre / telefonszámodra küldött kódot
+- Hagyd feloldva az Apple eszködöd
+- Amint a Sideloadlyban látod hogy "Done." és az app ikonja megjelenik a főképernyőn, a telepítés sikeres volt!
+- FONTOS: 7 napon belül mindig nyisd meg a gépeden a Sideloadly-t és csatlakoztasd feloldva az Apple eszközöd. Így a Sideloadly automatikusan frissíti az alkalmazásokat.
 
 
 ### Megjegyzések:
@@ -185,13 +196,3 @@ Három lehetőséged van a Firka telepítésére:
   - Add hozzá az új verziót
   - Sajnáljuk a komplikált fojamatot. Sajnálatos módon a Testflight vagy az App Storera való kitétel jelenleg nem nagyon egy opció, mivel az Applenek 100 eurós fejelsztői membership vásárlása kötelező.
 
-## Kreditek
-- **A Firka csapat**: Az app zöld verziójának fejlesztői
-    - Discord: [https://discord.gg/6awUPSMFKe](https://discord.gg/6awUPSMFKe)
-    - GitHub: [https://github.com/QwIT-Development/app-legacy](https://github.com/QwIT-Development/app-legacy)
-- **WSF**: A Permanent Signing lehetővé tétele
-    - X (korábban Twitter): [https://x.com/wsf_team](https://x.com/wsf_team)
-- **Spitkov**: A Feather útmutató írója, és a repok készítője/maintainelője.
-    - Weboldal: [https://spitkov.hu](https://spitkov.hu)
-- **TheAppleUser**: Az Esign és SideStore útmutató írója.
-    - X (korábban Twitter): [https://x.com/TheAppleUser11](https://x.com/TheAppleUser11)
