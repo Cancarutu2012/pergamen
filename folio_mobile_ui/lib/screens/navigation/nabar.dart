@@ -50,6 +50,7 @@ class Navbar extends StatelessWidget {
                   item: items[index],
                   active: index == selectedIndex,
                   onTap: () => onSelected(index),
+                  itemsCount: items.length,
                 ),
               ),
             ),

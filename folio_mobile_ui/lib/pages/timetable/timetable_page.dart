@@ -1,4 +1,4 @@
-﻿import 'dart:math';
+import 'dart:math';
 import 'package:animations/animations.dart';
 import 'package:i18n_extension/i18n_extension.dart';
 import 'package:folio/api/providers/database_provider.dart';
@@ -418,10 +418,9 @@ class TimetablePageState extends State<TimetablePage>
                               .withValues(alpha: 0.15),
                           borderRadius: BorderRadius.circular(14.0),
                         ),
-                        overlayColor: WidgetStateProperty.all(Theme.of(context)
-                            .colorScheme
-                            .secondary
-                            .withValues(alpha: 0.08)),
+                        overlayColor:
+                            WidgetStateProperty.all(Colors.transparent),
+                        splashFactory: NoSplash.splashFactory,
                         onTap: (_) =>
                             performHapticFeedback(settingsProvider.vibrate),
                         padding:

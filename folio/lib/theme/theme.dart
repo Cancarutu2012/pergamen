@@ -154,6 +154,11 @@ class AppTheme {
         ),
       ),
       indicatorColor: accent,
+      tabBarTheme: TabBarThemeData(
+        overlayColor: WidgetStateProperty.all(Colors.transparent),
+        splashFactory: NoSplash.splashFactory,
+        dividerColor: Colors.transparent,
+      ),
       iconTheme: IconThemeData(color: lightColors.text.withValues(alpha: .75)),
       navigationBarTheme: NavigationBarThemeData(
         indicatorColor: accent.withValues(
@@ -412,6 +417,11 @@ class AppTheme {
         ),
       ),
       indicatorColor: accent,
+      tabBarTheme: TabBarThemeData(
+        overlayColor: WidgetStateProperty.all(Colors.transparent),
+        splashFactory: NoSplash.splashFactory,
+        dividerColor: Colors.transparent,
+      ),
       iconTheme: IconThemeData(color: darkColors.text.withValues(alpha: .75)),
       navigationBarTheme: NavigationBarThemeData(
         indicatorColor: accent.withValues(

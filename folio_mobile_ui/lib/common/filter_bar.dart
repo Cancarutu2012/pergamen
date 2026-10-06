@@ -78,6 +78,7 @@ class _FilterBarState extends State<FilterBar> {
       // underline (bottom border)
       dividerColor: Colors.transparent,
       overlayColor: WidgetStateProperty.all(const Color(0x00000000)),
+      splashFactory: NoSplash.splashFactory,
       // tabs
       padding: EdgeInsets.zero,
       tabs: widget.censored

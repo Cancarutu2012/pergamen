@@ -445,9 +445,9 @@ class _GradesPageState extends State<GradesPage>
                       color: colorScheme.secondary.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(14.0),
                     ),
-                    overlayColor: WidgetStateProperty.all(
-                      colorScheme.secondary.withValues(alpha: 0.08),
-                    ),
+                    overlayColor:
+                        WidgetStateProperty.all(Colors.transparent),
+                    splashFactory: NoSplash.splashFactory,
                     padding: const EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 14.0),
                     tabs: [
                       Tab(text: 'subjects_tab'.i18n),

@@ -63,7 +63,7 @@ class _NavbarOrderSheetState extends State<_NavbarOrderSheet> {
     "notes",
   ];
 
-  static const int _maxNavbarItems = 4;
+  static const int _maxNavbarItems = 5;
 
   late List<String> _navbarItems;
   late List<String> _moreItems;

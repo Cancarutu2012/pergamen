@@ -519,17 +519,7 @@ class SettingsScreenState extends State<SettingsScreen>
     );
   }
 
-  Widget _subSetting(Widget child) {
-    return Container(
-      margin: const EdgeInsets.only(left: 10.0),
-      decoration: BoxDecoration(
-        color:
-            Theme.of(context).colorScheme.secondary.withValues(alpha: 0.06),
-        borderRadius: BorderRadius.circular(4.0),
-      ),
-      child: child,
-    );
-  }
+  Widget _subSetting(Widget child) => child;
 
   void _haptic() {
     switch (settings.vibrate) {
