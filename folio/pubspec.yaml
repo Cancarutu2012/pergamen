@@ -3,7 +3,7 @@ description: "Egy nem hivatalos e-KRÉTA kliens, diákoktól diákoknak."
 homepage: https://folio.zan1456.dev
 publish_to: "none"
 
-version: 1.2.14+45
+version: 1.2.15+46
 
 environment:
   sdk: ^3.6.0
@@ -59,6 +59,7 @@ flutter:
   assets:
     - assets/icons/ic_splash.png
     - assets/icons/ic_rounded.png
+    - assets/icons/pergamen_emblem.png
     - assets/images/
     - assets/svg/menu_icons/
     - assets/other/dirtywords.xml

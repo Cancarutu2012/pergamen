@@ -79,7 +79,7 @@ jobs:
           codesign --force --verify --verbose --sign - build-ipa-standard/Payload/Runner.app
 
           cd build-ipa-standard
-          zip -qry -9 ../output/Pergamen-1.2.14-BETA.ipa Payload
+          zip -qry -9 ../output/Pergamen-1.2.15-BETA.ipa Payload
           cd ..
 
           # -------------------------------------------------------------
@@ -101,7 +101,7 @@ jobs:
           codesign --force --verify --verbose --sign - build-ipa-full/Payload/Runner.app
 
           cd build-ipa-full
-          zip -qry -9 ../output/Pergamen-1.2.14-BETA-TrollStore.ipa Payload
+          zip -qry -9 ../output/Pergamen-1.2.15-BETA-TrollStore.ipa Payload
           cd ..
 
           ls -lh output/
@@ -109,7 +109,7 @@ jobs:
       - name: Upload IPA Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: Pergamen-1.2.14-BETA-iOS
+          name: Pergamen-1.2.15-BETA-iOS
           path: output/*.ipa
           retention-days: 14
 
@@ -163,11 +163,11 @@ jobs:
           cd folio
           flutter build apk --release --flavor github
           mkdir -p ../output-apk
-          cp build/app/outputs/flutter-apk/app-github-release.apk ../output-apk/Pergamen-1.2.14-BETA.apk
+          cp build/app/outputs/flutter-apk/app-github-release.apk ../output-apk/Pergamen-1.2.15-BETA.apk
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Pergamen-1.2.14-BETA-Android
-          path: output-apk/Pergamen-1.2.14-BETA.apk
+          name: Pergamen-1.2.15-BETA-Android
+          path: output-apk/Pergamen-1.2.15-BETA.apk
           retention-days: 14

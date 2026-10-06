@@ -22,6 +22,7 @@ import 'package:folio_mobile_ui/screens/settings/submenu/edit_subject.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:folio_mobile_ui/screens/settings/app_icon_screen.dart';
 import 'package:folio_mobile_ui/screens/settings/settings_screen.i18n.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -348,6 +349,20 @@ class PersonalizeSettingsScreenState extends State<PersonalizeSettingsScreen>
                         setState(() {});
                       },
                     ),
+                  ),
+                  // app icon changer
+                  SplittedPanel(
+                    padding: const EdgeInsets.only(top: 9.0),
+                    cardPadding: const EdgeInsets.all(4.0),
+                    isSeparated: true,
+                    children: const [
+                      MenuAppIcon(
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(12.0),
+                          bottom: Radius.circular(12.0),
+                        ),
+                      ),
+                    ],
                   ),
                   // shadow toggle
                   SplittedPanel(

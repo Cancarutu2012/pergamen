@@ -45,6 +45,7 @@ import 'package:folio_mobile_ui/common/splitted_panel/splitted_panel.dart';
 import 'package:folio_mobile_ui/common/widgets/update/update_viewable.dart';
 import 'package:folio_mobile_ui/screens/settings/live_activity_consent_dialog.dart';
 import 'package:folio_mobile_ui/screens/settings/navbar_order_screen.dart';
+import 'package:folio_mobile_ui/screens/settings/app_icon_screen.dart';
 import 'package:folio_mobile_ui/screens/settings/settings_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -2086,6 +2087,34 @@ class SettingsScreenState extends State<SettingsScreen>
             isSeparated: false,
             children: [
               MenuNavbarOrder(
+                borderRadius: const BorderRadius.vertical(
+                    top: Radius.circular(12.0), bottom: Radius.circular(12.0)),
+              ),
+            ],
+          ),
+        ),
+      ),
+
+      // App icon changer
+      _SettingsSection(
+        category: 'appearance',
+        searchTerms: [
+          'ikon',
+          'icon',
+          'app icon',
+          'alkalmazásikon',
+          'logo',
+          'szín',
+          'stílus',
+        ],
+        widget: Padding(
+          padding: EdgeInsets.zero,
+          child: SplittedPanel(
+            padding: const EdgeInsets.only(bottom: 14.0, left: 24.0, right: 24.0),
+            cardPadding: const EdgeInsets.all(4.0),
+            isSeparated: false,
+            children: [
+              MenuAppIcon(
                 borderRadius: const BorderRadius.vertical(
                     top: Radius.circular(12.0), bottom: Radius.circular(12.0)),
               ),
