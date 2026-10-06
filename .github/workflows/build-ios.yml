@@ -6,6 +6,11 @@ on:
     branches:
       - main
       - master
+    paths-ignore:
+      - 'pergamen_web/**'
+      - '**.md'
+      - 'LICENSE'
+      - '.gitignore'
 
 jobs:
   build-ios:
