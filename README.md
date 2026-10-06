@@ -20,4 +20,4 @@ Egy szebb, több funkcióval rendelkező alkalmazás létrehozása mint az alap 
 
 ## Elérhető lesz IOS-re?
 
-Már most is elérhető a Pergamen v1.2.12 BETA verziójától kezdve.
+Már most is elérhető a Pergamen v1.2.14 BETA verziójától kezdve.

@@ -1062,7 +1062,7 @@ class SettingsScreenState extends State<SettingsScreen>
                                   borderRadius: BorderRadius.circular(20.0),
                                 ),
                                 child: Text(
-                                  "1.2.12 BETA",
+                                  "1.2.14 BETA",
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodySmall!

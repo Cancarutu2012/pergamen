@@ -203,6 +203,26 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                               .text
                               .withValues(alpha: 0.55);
 
+                          final paddingTop =
+                              MediaQuery.of(context).padding.top;
+                          final double cardContentHeight =
+                              _liveCard.currentState == LiveCardState.morning
+                                  ? 282.0
+                                  : (_liveCard.currentState ==
+                                          LiveCardState.duringLesson
+                                      ? (_liveCard.currentLesson?.description
+                                                  .isNotEmpty ==
+                                              true
+                                          ? 312.0
+                                          : 288.0)
+                                      : (_liveCard.currentState ==
+                                              LiveCardState.duringBreak
+                                          ? 288.0
+                                          : (_liveCard.currentState ==
+                                                  LiveCardState.summary
+                                              ? 280.0
+                                              : 198.0)));
+
                           return SliverAppBar(
                             automaticallyImplyLeading: false,
                             backgroundColor:
@@ -212,11 +232,13 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             shape: const RoundedRectangleBorder(),
                             centerTitle: false,
                             titleSpacing: 0.0,
+                            toolbarHeight: 64.0,
                             // Welcome text
                             title: Padding(
                               padding: const EdgeInsets.only(left: 24.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Text(
                                     greeting,
@@ -262,35 +284,20 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                               ),
                             ),
 
-                            expandedHeight: _liveCardAnimation.value *
-                                (_liveCard.currentState == LiveCardState.morning
-                                    ? 270.0
-                                    : (_liveCard.currentState ==
-                                            LiveCardState.duringLesson
-                                        ? (_liveCard.currentLesson?.description
-                                                    .isNotEmpty ==
-                                                true
-                                            ? 292.0
-                                            : 268.0)
-                                        : (_liveCard.currentState ==
-                                                LiveCardState.duringBreak
-                                            ? 268.0
-                                            : (_liveCard.currentState ==
-                                                    LiveCardState.summary
-                                                ? 260.0
-                                                : 184.0)))),
+                            expandedHeight: paddingTop +
+                                (_liveCardAnimation.value * cardContentHeight),
 
                             // Live Card
                             flexibleSpace: FlexibleSpaceBar(
+                              collapseMode: CollapseMode.parallax,
                               background: Container(
                                 color: Theme.of(context).scaffoldBackgroundColor,
                                 child: Padding(
                                   padding: EdgeInsets.only(
                                     left: 24.0,
                                     right: 24.0,
-                                    top: 32.0 +
-                                        MediaQuery.of(context).padding.top,
-                                    bottom: 56.0,
+                                    top: paddingTop + 72.0,
+                                    bottom: 64.0,
                                   ),
                                   child: Transform.scale(
                                     scale: _liveCardAnimation.value,
