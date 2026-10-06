@@ -57,6 +57,8 @@ class MainActivity : FlutterActivity(), MessageClient.OnMessageReceivedListener 
                     }
                     else -> result.notImplemented()
                 }
+            }
+
         // ── Dynamic App Icon Channel ──────────────────────────────────────
         val iconChannel = MethodChannel(
             flutterEngine.dartExecutor.binaryMessenger,

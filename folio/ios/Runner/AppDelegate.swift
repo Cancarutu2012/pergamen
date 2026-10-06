@@ -93,6 +93,8 @@ func setupCrashHandler() {
                     return
                 }
                 self?.handleMethodCall(call, result: result)
+            })
+
             let iconChannel = FlutterMethodChannel(
                 name: "app.pergamen.students/app_icon",
                 binaryMessenger: controller.binaryMessenger
