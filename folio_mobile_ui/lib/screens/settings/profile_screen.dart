@@ -243,7 +243,8 @@ class ProfileScreenState extends State<ProfileScreen>
     );
   }
 
-  void _showAccountRemoveSheet(User account) {
+  void _showAccountRemoveSheet(User? account) {
+    if (account == null) return;
     final colorScheme = Theme.of(context).colorScheme;
     showBottomSheetMenu(context, items: [
       BottomSheetMenuItem(
@@ -254,10 +255,16 @@ class ProfileScreenState extends State<ProfileScreen>
         ),
         onPressed: () async {
           Navigator.of(context).pop();
+          final isCurrent = user.id == account.id;
+          final hasOther = user.getUsers().length > 1;
           user.removeUser(account.id);
           await Provider.of<DatabaseProvider>(context, listen: false)
               .store
               .removeUser(account.id);
+          if (isCurrent && !hasOther) {
+            Navigator.of(context)
+                .pushNamedAndRemoveUntil("login", (_) => false);
+          }
         },
       ),
     ]);
@@ -331,6 +338,14 @@ class ProfileScreenState extends State<ProfileScreen>
     user = Provider.of<UserProvider>(context);
     settings = Provider.of<SettingsProvider>(context);
     kretaClient = Provider.of<KretaClient>(context, listen: false);
+
+    // If user has been logged out or removed, render an empty view to prevent crashes during route transition
+    if (user.user == null) {
+      return Scaffold(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        body: const SizedBox.shrink(),
+      );
+    }
 
     final colorScheme = Theme.of(context).colorScheme;
     final student = user.student;
@@ -453,7 +468,8 @@ class ProfileScreenState extends State<ProfileScreen>
 
   Widget _buildProfilTab(BuildContext context, ColorScheme colorScheme,
       String firstName, String displayName, String username) {
-    final currentUser = user.getUser(user.id ?? "");
+    final currentUser = user.getUser(user.id ?? "") ?? user.user;
+    if (currentUser == null) return const SizedBox.shrink();
 
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
@@ -951,7 +967,8 @@ class ProfileScreenState extends State<ProfileScreen>
 
   Widget _buildFiokokTab(BuildContext context, ColorScheme colorScheme,
       String firstName, String displayName, String username) {
-    final currentUser = user.getUser(user.id ?? "");
+    final currentUser = user.getUser(user.id ?? "") ?? user.user;
+    if (currentUser == null) return const SizedBox.shrink();
     final otherAccounts =
         user.getUsers().where((a) => a.id != user.id).toList();
 

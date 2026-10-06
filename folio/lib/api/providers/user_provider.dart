@@ -44,13 +44,14 @@ class UserProvider with ChangeNotifier {
     if (_users.isNotEmpty) {
       setUser(_users.keys.first);
     } else {
+      _selectedUserId = null;
       await _settings.update(lastAccountId: "");
     }
     notifyListeners();
   }
 
-  User getUser(String userId) {
-    return _users[userId]!;
+  User? getUser(String userId) {
+    return _users[userId];
   }
 
   List<User> getUsers() {

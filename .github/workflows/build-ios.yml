@@ -139,6 +139,22 @@ jobs:
           mkdir -p ~/.android
           keytool -genkey -v -keystore ~/.android/debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US" || true
 
+          # Ensure persistent Pergamen release keystore is present for consistent signatures across all CI builds
+          mkdir -p folio/android
+          if [ ! -f folio/android/key.jks ]; then
+            cat << 'EOF' | base64 -d > folio/android/key.jks
+          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
+          EOF
+          fi
+          if [ ! -f folio/android/key.properties ]; then
+            cat << 'EOF' > folio/android/key.properties
+          storePassword=pergamen
+          keyPassword=pergamen
+          keyAlias=key
+          storeFile=key.jks
+          EOF
+          fi
+
       - name: Install dependencies
         run: |
           cd folio

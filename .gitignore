@@ -3,7 +3,9 @@ folio/debug-info/
 
 # /folio/android
 **/*.jks
+!folio/android/key.jks
 **/*key.properties
+!folio/android/key.properties
 **/.gradle/
 **/.kotlin/
 
