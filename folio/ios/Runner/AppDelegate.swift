@@ -93,7 +93,37 @@ func setupCrashHandler() {
                     return
                 }
                 self?.handleMethodCall(call, result: result)
+            let iconChannel = FlutterMethodChannel(
+                name: "app.pergamen.students/app_icon",
+                binaryMessenger: controller.binaryMessenger
+            )
+            iconChannel.setMethodCallHandler({ (call: FlutterMethodCall, result: @escaping FlutterResult) in
+                if call.method == "setAppIcon" {
+                    guard let args = call.arguments as? [String: Any],
+                          let iconName = args["iconName"] as? String else {
+                        result(FlutterError(code: "INVALID_ARGS", message: "iconName required", details: nil))
+                        return
+                    }
+                    guard UIApplication.shared.supportsAlternateIcons else {
+                        result(false)
+                        return
+                    }
+                    let target = (iconName == "default") ? nil : iconName
+                    UIApplication.shared.setAlternateIconName(target) { error in
+                        if let error = error {
+                            writePergamenLog("Error setting alternate icon: \(error.localizedDescription)")
+                            result(FlutterError(code: "ICON_ERROR", message: error.localizedDescription, details: nil))
+                        } else {
+                            result(true)
+                        }
+                    }
+                } else if call.method == "getCurrentIcon" {
+                    result(UIApplication.shared.alternateIconName ?? "default")
+                } else {
+                    result(FlutterMethodNotImplemented)
+                }
             })
+
             writePergamenLog("7. Method channel configured successfully.")
         } else {
             writePergamenLog("6. Warning: rootViewController is not FlutterViewController")

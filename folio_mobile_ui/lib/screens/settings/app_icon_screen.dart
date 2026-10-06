@@ -4,6 +4,7 @@ import 'package:folio/models/settings.dart';
 import 'package:folio/theme/colors/colors.dart';
 import 'package:folio_mobile_ui/common/panel/panel_button.dart';
 import 'package:folio_mobile_ui/screens/settings/app_icon_data.dart';
+import 'package:folio_mobile_ui/screens/settings/app_icon_service.dart';
 import 'package:provider/provider.dart';
 
 class MenuAppIcon extends StatelessWidget {
@@ -232,31 +233,36 @@ class _AppIconScreenState extends State<AppIconScreen> {
                           option.id == 'default');
 
                   return InkWell(
-                    onTap: () {
+                    onTap: () async {
                       HapticFeedback.selectionClick();
                       settings.update(appIcon: option.id);
-                      ScaffoldMessenger.of(context).clearSnackBars();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          behavior: SnackBarBehavior.floating,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12.0),
+                      await AppIconService.setAppIcon(option.id);
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).clearSnackBars();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            behavior: SnackBarBehavior.floating,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                            content: Row(
+                              children: [
+                                AppIconWidget(
+                                  option: option,
+                                  size: 24.0,
+                                  borderRadius: 6.0,
+                                  showShadow: false,
+                                ),
+                                const SizedBox(width: 12.0),
+                                Expanded(
+                                  child: Text("Alkalmazásikon beállítva: ${option.name}"),
+                                ),
+                              ],
+                            ),
+                            duration: const Duration(seconds: 2),
                           ),
-                          content: Row(
-                            children: [
-                              AppIconWidget(
-                                option: option,
-                                size: 24.0,
-                                borderRadius: 6.0,
-                                showShadow: false,
-                              ),
-                              const SizedBox(width: 12.0),
-                              Text("Alkalmazásikon beállítva: ${option.name}"),
-                            ],
-                          ),
-                          duration: const Duration(seconds: 2),
-                        ),
-                      );
+                        );
+                      }
                     },
                     borderRadius: BorderRadius.circular(16.0),
                     child: Container(

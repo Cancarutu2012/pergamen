@@ -57,7 +57,24 @@ class MainActivity : FlutterActivity(), MessageClient.OnMessageReceivedListener 
                     }
                     else -> result.notImplemented()
                 }
+        // ── Dynamic App Icon Channel ──────────────────────────────────────
+        val iconChannel = MethodChannel(
+            flutterEngine.dartExecutor.binaryMessenger,
+            "app.pergamen.students/app_icon"
+        )
+        iconChannel.setMethodCallHandler { call, result ->
+            when (call.method) {
+                "setAppIcon" -> {
+                    val iconName = call.argument<String>("iconName")
+                    val success = switchAppIcon(iconName)
+                    result.success(success)
+                }
+                "getCurrentIcon" -> {
+                    result.success(getCurrentAppIcon())
+                }
+                else -> result.notImplemented()
             }
+        }
 
         // ── Wear OS sync channel ──────────────────────────────────────────
         val wearMethodChannel = MethodChannel(
@@ -147,6 +164,74 @@ class MainActivity : FlutterActivity(), MessageClient.OnMessageReceivedListener 
                 }
             }
         }
+    }
+
+    private val ALL_ICON_ALIASES = listOf(
+        "MainActivityDefault",
+        "MainActivity_dark",
+        "MainActivity_light",
+        "MainActivity_ocean",
+        "MainActivity_emerald",
+        "MainActivity_mint",
+        "MainActivity_ruby",
+        "MainActivity_coral",
+        "MainActivity_sunset",
+        "MainActivity_amber",
+        "MainActivity_purple",
+        "MainActivity_indigo",
+        "MainActivity_pink",
+        "MainActivity_cyan",
+        "MainActivity_amoled",
+        "MainActivity_cyberpunk",
+        "MainActivity_matrix",
+        "MainActivity_retrowave",
+        "MainActivity_aurora",
+        "MainActivity_frost",
+        "MainActivity_royal"
+    )
+
+    private fun switchAppIcon(iconName: String?): Boolean {
+        val pm = packageManager
+        val pkg = packageName
+        val targetAlias = if (iconName.isNullOrEmpty() || iconName == "default") {
+            "MainActivityDefault"
+        } else {
+            "MainActivity_$iconName"
+        }
+
+        return try {
+            for (alias in ALL_ICON_ALIASES) {
+                val comp = android.content.ComponentName(pkg, "$pkg.$alias")
+                val targetState = if (alias == targetAlias) {
+                    android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_ENABLED
+                } else {
+                    android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_DISABLED
+                }
+                if (pm.getComponentEnabledSetting(comp) != targetState) {
+                    pm.setComponentEnabledSetting(
+                        comp,
+                        targetState,
+                        android.content.pm.PackageManager.DONT_KILL_APP
+                    )
+                }
+            }
+            true
+        } catch (e: Exception) {
+            Log.e(TAG, "Error switching app icon to $iconName", e)
+            false
+        }
+    }
+
+    private fun getCurrentAppIcon(): String {
+        val pm = packageManager
+        val pkg = packageName
+        for (alias in ALL_ICON_ALIASES) {
+            val comp = android.content.ComponentName(pkg, "$pkg.$alias")
+            if (pm.getComponentEnabledSetting(comp) == android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_ENABLED) {
+                return if (alias == "MainActivityDefault") "default" else alias.removePrefix("MainActivity_")
+            }
+        }
+        return "default"
     }
 
     override fun onDestroy() {

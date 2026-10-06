@@ -60,6 +60,7 @@ flutter:
     - assets/icons/ic_splash.png
     - assets/icons/ic_rounded.png
     - assets/icons/pergamen_emblem.png
+    - assets/icons/app_icons/
     - assets/images/
     - assets/svg/menu_icons/
     - assets/other/dirtywords.xml
