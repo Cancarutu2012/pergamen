@@ -66,6 +66,7 @@ jobs:
           # -------------------------------------------------------------
           mkdir -p build-ipa-standard/Payload
           cp -a folio/build/ios/iphoneos/Runner.app build-ipa-standard/Payload/
+          cp folio/ios/Runner/*.png build-ipa-standard/Payload/Runner.app/ 2>/dev/null || true
           rm -rf build-ipa-standard/Payload/Runner.app/PlugIns
 
           # Ensure execute permissions on binary and frameworks
@@ -88,6 +89,7 @@ jobs:
           # -------------------------------------------------------------
           mkdir -p build-ipa-full/Payload
           cp -a folio/build/ios/iphoneos/Runner.app build-ipa-full/Payload/
+          cp folio/ios/Runner/*.png build-ipa-full/Payload/Runner.app/ 2>/dev/null || true
 
           chmod -R a+rX build-ipa-full/Payload/Runner.app
           chmod +x build-ipa-full/Payload/Runner.app/Runner

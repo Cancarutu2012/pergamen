@@ -106,21 +106,31 @@ func setupCrashHandler() {
                         result(FlutterError(code: "INVALID_ARGS", message: "iconName required", details: nil))
                         return
                     }
-                    guard UIApplication.shared.supportsAlternateIcons else {
-                        result(false)
-                        return
-                    }
-                    let target = (iconName == "default") ? nil : iconName
-                    UIApplication.shared.setAlternateIconName(target) { error in
-                        if let error = error {
-                            writePergamenLog("Error setting alternate icon: \(error.localizedDescription)")
-                            result(FlutterError(code: "ICON_ERROR", message: error.localizedDescription, details: nil))
-                        } else {
+                    DispatchQueue.main.async {
+                        guard UIApplication.shared.supportsAlternateIcons else {
+                            writePergamenLog("supportsAlternateIcons returned false")
+                            result(false)
+                            return
+                        }
+                        let target = (iconName == "default" || iconName == "folio_default") ? nil : iconName
+                        if UIApplication.shared.alternateIconName == target {
                             result(true)
+                            return
+                        }
+                        UIApplication.shared.setAlternateIconName(target) { error in
+                            if let error = error {
+                                writePergamenLog("Error setting alternate icon to \(target ?? "default"): \(error.localizedDescription)")
+                                result(FlutterError(code: "ICON_ERROR", message: error.localizedDescription, details: nil))
+                            } else {
+                                writePergamenLog("Alternate icon changed successfully to: \(target ?? "default")")
+                                result(true)
+                            }
                         }
                     }
                 } else if call.method == "getCurrentIcon" {
-                    result(UIApplication.shared.alternateIconName ?? "default")
+                    DispatchQueue.main.async {
+                        result(UIApplication.shared.alternateIconName ?? "default")
+                    }
                 } else {
                     result(FlutterMethodNotImplemented)
                 }
